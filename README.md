@@ -1,63 +1,37 @@
-既然你已经拥有一套完整、具备后台异步执行能力且带有随机防封策略的微信群发系统，README 需要写得既专业又易于上手。
+# 🚀 WeChat Group Sender Pro
 
-这份 README 采用了 网站前端设计师 的审美标准，使用了清晰的结构和 Emoji 装饰。你可以直接将其保存为 README.md。
+[![PHP Version](https://img.shields.io/badge/php-%3E%3D7.4-8892bf.svg?style=flat-square)](https://php.net)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey.svg?style=flat-square)](https://github.com/)
 
-🚀 WeChat Group Sender Pro
-智能微信群发与分类管理系统 (PHP 异步后台版)
-这是一个为 Qianxun HTTP API 定制的微信群发控制台。它不仅支持群组的抓取与多分类保存，还具备真正的后台脱机运行能力和随机延迟防封策略。
+**WeChat Group Sender Pro** 是一款专为“千寻微信框架”设计的轻量级管理后台。它集成了群组抓取、自定义分类、后台异步群发以及随机防封延迟等核心功能。
 
-✨ 核心特性
-📦 分类管理: 支持将几百个群组按需勾选，并保存为多个独立的 .json 分类表。
 
-⏱️ 随机延迟: 严格执行每个群发任务间隔 5s - 60s 随机波动，模拟人工操作，降低封号风险。
 
-📡 异步后台执行: 任务提交后，PHP 进程会在后台独立运行。你可以关闭浏览器、断开网络，服务器仍会按计划完成任务。
+---
 
-📜 实时精准日志: 发送状态精确到每一个群，支持在控制台实时刷新查看执行进度。
+## ✨ 核心特性
 
-🎨 现代 UI 设计: 基于 Bootstrap 5 的响应式布局，黑客风格日志控制台。
+* **📦 智能分类管理**: 支持从原始数据中精选群组，一键导出为 `.json` 分类表，实现精准营销。
+* **📡 脱机异步发送**: 采用 `fastcgi_finish_request` 逻辑，点击发送后浏览器可直接关闭，任务在服务器后台静默运行。
+* **⏱️ 随机防封算法**: 严格遵循 **5s - 60s** 的随机休眠策略，模拟真人发送频率，保护账号安全。
+* **📜 实时透明日志**: 黑色控制台风格日志，精确记录每一个群组的发送时间、ID 及成功状态。
+* **🎨 极简工业设计**: 基于 **Bootstrap 5** 开发，无需复杂配置，开箱即用。
 
-🛠️ 环境要求
-PHP: 7.4 或更高版本 (需支持 curl 扩展)
+---
 
-Web Server: Apache / Nginx
+## 🛠️ 技术架构
 
-API: 千寻微信 HTTP 框架 (或其他兼容 Q0001/Q0006 协议的接口)
+- **后端**: PHP (处理异步 I/O、CURL 请求、本地文件持久化)
+- **前端**: JavaScript (Fetch API 异步交互) + Bootstrap 5
+- **存储**: 基于文件系统的 JSON 存储（无需 MySQL 数据库）
 
-权限: 确保项目目录具备读写权限（用于生成分类文件和日志）
+---
 
-🚀 快速上手
-1. 克隆与配置
-将代码上传至你的 Web 目录，并确保目录权限正确：
+## 🚀 快速开始
 
-Bash
+### 1. 环境准备
+确保您的 Web 服务器拥有对以下文件夹的写入权限：
+```bash
 chmod -R 777 ./groups_config
 touch history.log && chmod 777 history.log
-2. 接口对接
-在 index.php 顶部修改你的 API 地址：
-
-PHP
-$apiUrl = "http://192.168.x.x:7777/qianxun/httpapi?wxid=your_wxid";
-3. 操作流程
-抓取群组: 访问 get_groups.php，点击“拉取最新群聊”。
-
-创建分类: 勾选你想要的群组，输入分类名称（如：深圳外卖群），保存。
-
-启动群发: 访问 sender.php (或整合后的 index.php)，选择分类，输入消息内容，点击启动。
-
-查看结果: 观察右侧“发送状态记录”，实时跟踪每个群的下发状态。
-
-📂 文件结构说明
-Plaintext
-├── index.php             # 主控制台 (发送任务 + 日志查看)
-├── get_groups.php        # 群组抓取与分类管理器
-├── groups_config/        # 文件夹：存储你保存的分类 JSON 表
-├── history.log           # 文件：存储所有发送历史
-└── README.md             # 本说明文件
-⚠️ 安全说明
-内网部署: 本系统建议在内网环境使用，如需公网访问，请务必增加登录鉴权。
-
-频率限制: 随机延迟默认设定为 5-60 秒。若群组数量巨大，建议不要自行调低延迟，以免触动微信风控。
-
-🤝 贡献与反馈
-如果你有更好的 UI 设计方案或功能建议，欢迎提交 Pull Request！
